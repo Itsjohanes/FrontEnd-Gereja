@@ -93,7 +93,7 @@
 
     $(document).ready(function() {
       // Ambil data JSON dari /indo_tb.json
-      $.getJSON("indo_tb.json", function(data) {
+      $.getJSON("http://localhost/gbi/indo_tb.json", function(data) {
         bibleData = data;
         // Tampilkan metadata
         $("#book-name").text(data.metadata.name);
