@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengumuman</title>
+  <title>Renungan</title>
   <!-- Bootstrap CSS -->
   <link href="bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
@@ -46,11 +46,7 @@
     }
   </style>
 </head>
-<body
-    class="theme-light"
-    data-highlight="highlight-red"
-    data-gradient="body-default"
-  >
+<body>
   <div id="preloader">
     <div class="spinner-border color-highlight" role="status"></div>
   </div>
@@ -62,8 +58,8 @@
     
   </div>
   <div class="container mt-4">
-    <h1 class="text-center">Daftar Pengumuman</h1>
-    <div id="pengumuman-list" class="row justify-content-center"></div>
+    <h1 class="text-center">Daftar Renungan</h1>
+    <div id="renungan-list" class="row justify-content-center"></div>
   </div>
   
   <style>
@@ -98,7 +94,6 @@
     <div class="clear"></div>
   </div>
 </div>
-<!-- End of Page Content-->
 
 
   <!-- Bootstrap JS Bundle (includes Popper) -->
@@ -109,22 +104,20 @@
   <script type="text/javascript" src="scripts/custom.js"></script>
   <script>
     $(document).ready(function () {
-    $.get("http://127.0.0.1:8000/api/pengumuman", function (jsonData) {
+    $.get("http://127.0.0.1:8000/api/renungan", function (jsonData) {
         if (jsonData.success) {
-            jsonData.data.forEach(pengumuman => {
-                let pengumumanCard = `
+            jsonData.data.forEach(renungan => {
+                let renunganCard = `
                     <div class="col-12 col-md-8 col-lg-6 mb-4">
                         <div class="card shadow-sm border-0 rounded">
-                            <img src="http://127.0.0.1:8000/storage/${pengumuman.gambar}" class="card-img-top img-fluid" alt="${pengumuman.judul}">
                             <div class="card-body">
-                                <h5 class="card-title">${pengumuman.judul}</h5>
-                                <p class="card-text">${pengumuman.isi}</p>
-                                <p class="text-muted small">Tanggal: ${pengumuman.tanggal}</p>
+                                <a href="/gbi/halaman_renungan.html?id=${renungan.id_renungan}" class="card-title">${renungan.judul}</a>
+                                <p class="text-muted small">Tanggal: ${renungan.tanggal}</p>
                             </div>
                         </div>
                     </div>
                 `;
-                $('#pengumuman-list').append(pengumumanCard);
+                $('#renungan-list').append(renunganCard);
             });
         }
     });

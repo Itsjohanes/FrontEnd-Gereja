@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengumuman</title>
+  <title>Renungan</title>
   <!-- Bootstrap CSS -->
   <link href="bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
@@ -46,24 +46,30 @@
     }
   </style>
 </head>
-<body
-    class="theme-light"
-    data-highlight="highlight-red"
-    data-gradient="body-default"
-  >
-  <div id="preloader">
-    <div class="spinner-border color-highlight" role="status"></div>
-  </div>
+<body>
+
   <div id="footer-bar" class="footer-bar-1">
     <a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>
     <a href="menu.html" class="active-nav"
       ><i class="fa fa-heart"></i><span>Menu</span></a
     >
-    
+   
   </div>
   <div class="container mt-4">
-    <h1 class="text-center">Daftar Pengumuman</h1>
-    <div id="pengumuman-list" class="row justify-content-center"></div>
+    <h1 id = "judul" class="text-center">Daftar Renungan</h1>
+      <div class="content">
+        <p id = "tanggal" class="text-center">Tanggal: 01 Januari 2021</p>
+      </div>
+    <div class="card card-style">
+      <div class="content">
+        <p id = "isi">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          ultricies, nunc et luctus ultricies, nunc et luctus ultricies, nunc et
+          luctus ultricies, nunc et luctus ultricies, nunc et luctus ultricies,
+        </p>
+      </div>
+    </div>
+    
   </div>
   
   <style>
@@ -98,7 +104,6 @@
     <div class="clear"></div>
   </div>
 </div>
-<!-- End of Page Content-->
 
 
   <!-- Bootstrap JS Bundle (includes Popper) -->
@@ -109,25 +114,27 @@
   <script type="text/javascript" src="scripts/custom.js"></script>
   <script>
     $(document).ready(function () {
-    $.get("http://127.0.0.1:8000/api/pengumuman", function (jsonData) {
-        if (jsonData.success) {
-            jsonData.data.forEach(pengumuman => {
-                let pengumumanCard = `
-                    <div class="col-12 col-md-8 col-lg-6 mb-4">
-                        <div class="card shadow-sm border-0 rounded">
-                            <img src="http://127.0.0.1:8000/storage/${pengumuman.gambar}" class="card-img-top img-fluid" alt="${pengumuman.judul}">
-                            <div class="card-body">
-                                <h5 class="card-title">${pengumuman.judul}</h5>
-                                <p class="card-text">${pengumuman.isi}</p>
-                                <p class="text-muted small">Tanggal: ${pengumuman.tanggal}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $('#pengumuman-list').append(pengumumanCard);
-            });
-        }
-    });
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const id_renungan = urlParams.get('id'); // Ambil ID dari URL
+
+      $.get(`http://127.0.0.1:8000/api/renungan/${id_renungan}`, function (jsonData) {
+     
+
+          // Periksa apakah API mengembalikan data yang valid
+          if (jsonData.success && jsonData.data) {
+              $("#judul").text(jsonData.data.judul);
+              $("#isi").text(jsonData.data.isi);
+              $("#tanggal").text(jsonData.data.tanggal);
+          } else {
+              $("#judul").text("Renungan Tidak Ditemukan");
+              $("#isi").text("Maaf, renungan tidak tersedia.");
+              $("#tanggal").text("-");
+          }
+      });
+
+
+
 });
 
 </script>
